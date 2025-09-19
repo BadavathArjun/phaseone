@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { chatAPI } from '../api/chat';
+import { chatAPI } from '../api/auth';
 import { io } from 'socket.io-client';
 
 export default function Messaging({ chatId, otherUser }) {

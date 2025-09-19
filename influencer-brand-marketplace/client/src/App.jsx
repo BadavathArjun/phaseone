@@ -12,12 +12,16 @@ import CreateCampaign from './pages/CreateCampaign';
 import SearchInfluencers from './pages/SearchInfluencers';
 import Messages from './pages/Messages';
 import TrendsPage from './pages/TrendsPage';
+import Proposals from './pages/Proposals';
+
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-gray-50">
+        <Navbar />
+        <div className="min-h-screen bg-gray-50 pt-4">
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -61,12 +65,19 @@ function App() {
                 <Messages />
               </ProtectedRoute>
             } />
+            <Route path="/proposals" element={
+              <ProtectedRoute allowedRoles={['brand']}>
+                <Proposals />
+              </ProtectedRoute>
+            } />
             <Route path="/trends/:influencerId" element={
               <ProtectedRoute>
                 <TrendsPage />
               </ProtectedRoute>
             } />
             <Route path="/" element={<Dashboard />} />
+            <Route path="/home" element={<Dashboard />} />
+            <Route path="*" element={<Dashboard />} />
           </Routes>
         </div>
       </Router>

@@ -111,4 +111,34 @@ router.post('/:id/apply', auth, async (req, res) => {
   }
 });
 
+// Accept or reject proposal
+router.put('/:id/proposals/:proposalId', auth, async (req, res) => {
+  try {
+    const { status } = req.body; // 'accepted' or 'rejected'
+    const campaign = await Campaign.findById(req.params.id);
+
+    if (!campaign) {
+      return res.status(404).json({ message: 'Campaign not found' });
+    }
+
+    // Check if user owns the campaign
+    const brand = await Brand.findOne({ userId: req.user.id });
+    if (!brand || campaign.brandId.toString() !== brand._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized' });
+    }
+
+    const proposal = campaign.proposals.id(req.params.proposalId);
+    if (!proposal) {
+      return res.status(404).json({ message: 'Proposal not found' });
+    }
+
+    proposal.status = status;
+    await campaign.save();
+
+    res.json({ message: `Proposal ${status}` });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;

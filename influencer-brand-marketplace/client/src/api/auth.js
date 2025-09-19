@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -53,6 +53,7 @@ export const campaignsAPI = {
   get: (id) => api.get(`/campaigns/${id}`),
   update: (id, updates) => api.put(`/campaigns/${id}`, updates),
   apply: (campaignId, proposal) => api.post(`/campaigns/${campaignId}/apply`, proposal),
+  updateProposal: (campaignId, proposalId, status) => api.put(`/campaigns/${campaignId}/proposals/${proposalId}`, { status }),
 };
 
 export const chatAPI = {

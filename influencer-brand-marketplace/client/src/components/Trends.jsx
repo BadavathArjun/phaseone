@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
-import { influencerAPI } from '../api/influencer';
+import { influencerAPI } from '../api/auth';
 
 export default function Trends({ influencerId }) {
   const [timeRange, setTimeRange] = useState('7d');
