@@ -15,6 +15,7 @@ const CreateCampaign = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const categories = [
     'Fashion', 'Beauty', 'Lifestyle', 'Travel', 'Food',
@@ -52,16 +53,67 @@ const CreateCampaign = () => {
     });
   };
 
+  const validateForm = () => {
+    if (!formData.title.trim()) return 'Campaign title is required';
+    if (!formData.description.trim()) return 'Campaign description is required';
+    if (!formData.budget || formData.budget <= 0) return 'Budget must be greater than 0';
+    if (!formData.deadline) return 'Deadline is required';
+    if (formData.categories.length === 0) return 'At least one category must be selected';
+    if (formData.platforms.length === 0) return 'At least one platform must be selected';
+
+    // Check if deadline is in the future
+    const deadlineDate = new Date(formData.deadline);
+    const now = new Date();
+    if (deadlineDate <= now) return 'Deadline must be a future date';
+
+    return null;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Client-side validation
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     setLoading(true);
     setError('');
+    setSuccess('');
 
     try {
       await campaignsAPI.create(formData);
-      navigate('/campaigns');
+      setSuccess('Campaign created successfully! Redirecting to campaigns page...');
+
+      // Clear form
+      setFormData({
+        title: '',
+        description: '',
+        budget: '',
+        requirements: '',
+        categories: [],
+        platforms: [],
+        deadline: ''
+      });
+
+      // Redirect after a short delay to show success message
+      setTimeout(() => {
+        navigate('/campaigns');
+      }, 2000);
     } catch (err) {
-      setError('Failed to create campaign. Please try again.');
+      console.error('Campaign creation error:', err);
+      if (err.response) {
+        // Server responded with error status
+        setError(err.response.data.message || 'Failed to create campaign. Please try again.');
+      } else if (err.request) {
+        // Network error
+        setError('Network error. Please check your connection and try again.');
+      } else {
+        // Other error
+        setError('Failed to create campaign. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -75,6 +127,12 @@ const CreateCampaign = () => {
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
             {error}
+          </div>
+        )}
+
+        {success && (
+          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+            {success}
           </div>
         )}
 

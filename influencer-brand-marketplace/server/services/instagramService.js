@@ -59,6 +59,12 @@ class InstagramService {
   // Get comprehensive stats for an influencer
   async getInfluencerStats(instagramUsername) {
     try {
+      // Check if we have valid Instagram API credentials
+      if (!this.accessToken) {
+        console.warn('Instagram API credentials not configured, using mock data');
+        return this.getMockStats();
+      }
+
       // First, we need to get the user ID from username
       // Note: This requires Instagram Business API or Facebook Graph API
       // For now, we'll simulate with mock data since Instagram API has restrictions
@@ -87,6 +93,30 @@ class InstagramService {
       console.error('Instagram Service Error:', error.message);
       throw error;
     }
+  }
+
+  // Generate realistic mock stats for testing
+  getMockStats() {
+    const baseFollowers = Math.floor(Math.random() * 100000) + 10000;
+    const engagementRate = Math.random() * 5 + 1; // 1-6%
+
+    return {
+      followers: baseFollowers,
+      engagementRate: engagementRate,
+      posts: Array.from({ length: 10 }, (_, i) => ({
+        likes: Math.floor(Math.random() * 1000) + 50,
+        comments: Math.floor(Math.random() * 100) + 5,
+        date: new Date(Date.now() - i * 24 * 60 * 60 * 1000)
+      })),
+      followersHistory: Array.from({ length: 30 }, (_, i) => ({
+        count: baseFollowers + Math.floor(Math.random() * 1000) - 500,
+        date: new Date(Date.now() - i * 24 * 60 * 60 * 1000)
+      })),
+      engagementHistory: Array.from({ length: 30 }, (_, i) => ({
+        rate: Math.random() * 5 + 1,
+        date: new Date(Date.now() - i * 24 * 60 * 60 * 1000)
+      }))
+    };
   }
 
   // Refresh Instagram stats for an influencer

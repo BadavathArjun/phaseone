@@ -20,64 +20,70 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <Navbar />
-        <div className="min-h-screen bg-gray-50 pt-4">
+        <div className="min-h-screen bg-white">
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/influencer-profile" element={
-              <ProtectedRoute allowedRoles={['influencer']}>
-                <InfluencerProfile />
-              </ProtectedRoute>
+            <Route path="/*" element={
+              <>
+                <Navbar />
+                <Routes>
+                  <Route path="/influencer-profile" element={
+                    <ProtectedRoute allowedRoles={['influencer']}>
+                      <InfluencerProfile />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/brand-profile" element={
+                    <ProtectedRoute allowedRoles={['brand']}>
+                      <BrandProfile />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/dashboard" element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/campaigns" element={
+                    <ProtectedRoute>
+                      <Campaigns />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/campaigns/:id" element={
+                    <ProtectedRoute>
+                      <CampaignDetail />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/create-campaign" element={
+                    <ProtectedRoute allowedRoles={['brand']}>
+                      <CreateCampaign />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/search" element={
+                    <ProtectedRoute allowedRoles={['brand']}>
+                      <SearchInfluencers />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/messages" element={
+                    <ProtectedRoute>
+                      <Messages />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/proposals" element={
+                    <ProtectedRoute allowedRoles={['brand']}>
+                      <Proposals />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/trends/:influencerId" element={
+                    <ProtectedRoute>
+                      <TrendsPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/home" element={<Dashboard />} />
+                  <Route path="*" element={<Dashboard />} />
+                </Routes>
+              </>
             } />
-            <Route path="/brand-profile" element={
-              <ProtectedRoute allowedRoles={['brand']}>
-                <BrandProfile />
-              </ProtectedRoute>
-            } />
-            <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="/campaigns" element={
-              <ProtectedRoute>
-                <Campaigns />
-              </ProtectedRoute>
-            } />
-            <Route path="/campaigns/:id" element={
-              <ProtectedRoute>
-                <CampaignDetail />
-              </ProtectedRoute>
-            } />
-            <Route path="/create-campaign" element={
-              <ProtectedRoute allowedRoles={['brand']}>
-                <CreateCampaign />
-              </ProtectedRoute>
-            } />
-            <Route path="/search" element={
-              <ProtectedRoute allowedRoles={['brand']}>
-                <SearchInfluencers />
-              </ProtectedRoute>
-            } />
-            <Route path="/messages" element={
-              <ProtectedRoute>
-                <Messages />
-              </ProtectedRoute>
-            } />
-            <Route path="/proposals" element={
-              <ProtectedRoute allowedRoles={['brand']}>
-                <Proposals />
-              </ProtectedRoute>
-            } />
-            <Route path="/trends/:influencerId" element={
-              <ProtectedRoute>
-                <TrendsPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/home" element={<Dashboard />} />
-            <Route path="*" element={<Dashboard />} />
           </Routes>
         </div>
       </Router>

@@ -1,40 +1,38 @@
-# Testing Plan for Proposals and Instagram Stats Features
+# Campaign Creation Fix - TODO
 
-## 1. Setup Environment
-- [ ] Start backend server
-- [ ] Start frontend client
-- [ ] Verify servers are running and accessible
+## Issues to Fix:
+1. **Port Mismatch**: Server runs on port 4001, client API defaults to port 5000
+2. **Missing Success Notification**: No success message after campaign creation
+3. **Error Handling**: Need better error messages and logging
+4. **Date Format**: Ensure deadline date is properly formatted
 
-## 2. UI Testing - Proposal Submission
-- [ ] Navigate to CampaignDetail page as influencer
-- [ ] Open proposal submission modal
-- [ ] Fill out and submit proposal form
-- [ ] Verify success message and modal closes
-- [ ] Check proposal appears in campaign data
+## Implementation Steps:
 
-## 3. UI Testing - Proposal Management
-- [ ] Navigate to Proposals page as brand
-- [ ] View campaigns with proposals
-- [ ] Accept a proposal
-- [ ] Reject a proposal
-- [ ] Verify status updates correctly
+### Step 1: Fix API URL Configuration
+- [ ] Update client API configuration to use correct server port (4001)
 
-## 4. API Testing - Backend Endpoints
-- [ ] Test campaign apply endpoint (POST /campaigns/:id/apply)
-- [ ] Test proposal update endpoint (PUT /campaigns/:id/proposals/:proposalId)
-- [ ] Test Instagram stats refresh endpoint (POST /influencer/:id/refresh-instagram-stats)
+### Step 2: Add Success Notification
+- [ ] Modify CreateCampaign.jsx to show success notification
+- [ ] Add success state management
 
-## 5. Responsiveness Testing
-- [ ] Test proposal modal on mobile screen sizes
-- [ ] Test proposals management page on tablet/desktop
-- [ ] Verify layout adapts correctly
+### Step 3: Improve Error Handling
+- [ ] Add more specific error messages
+- [ ] Add better error logging for debugging
 
-## 6. Accessibility Testing
-- [ ] Test keyboard navigation in proposal modal
-- [ ] Verify ARIA labels and roles
-- [ ] Check screen reader compatibility
+### Step 4: Fix Date Handling
+- [ ] Ensure deadline date is properly formatted for MongoDB
 
-## 7. Final Verification
-- [ ] Ensure all features work end-to-end
-- [ ] Check for any console errors
-- [ ] Verify data persistence across sessions
+### Step 5: Add Campaign Creation Validation
+- [ ] Add client-side validation
+- [ ] Add server-side validation improvements
+
+## Files to Modify:
+- `client/src/api/auth.js` - Fix API URL
+- `client/src/pages/CreateCampaign.jsx` - Add success notification and improve error handling
+- `server/routes/campaigns.js` - Improve error handling and logging
+
+## Testing:
+- [ ] Test campaign creation with provided data
+- [ ] Verify data is stored in MongoDB
+- [ ] Check success notification appears
+- [ ] Test error scenarios

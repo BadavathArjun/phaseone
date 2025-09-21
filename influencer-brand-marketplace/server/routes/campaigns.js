@@ -31,28 +31,68 @@ router.get('/:id', auth, async (req, res) => {
 router.post('/create', auth, async (req, res) => {
   try {
     const { title, description, budget, requirements, categories, platforms, deadline } = req.body;
-    
+
+    // Validate required fields
+    if (!title || !description || !budget || !deadline) {
+      return res.status(400).json({
+        message: 'Missing required fields: title, description, budget, and deadline are required'
+      });
+    }
+
+    if (!categories || categories.length === 0) {
+      return res.status(400).json({
+        message: 'At least one category must be selected'
+      });
+    }
+
+    if (!platforms || platforms.length === 0) {
+      return res.status(400).json({
+        message: 'At least one platform must be selected'
+      });
+    }
+
     // Check if user is a brand
     const brand = await Brand.findOne({ userId: req.user.id });
     if (!brand) {
-      return res.status(403).json({ message: 'Only brands can create campaigns' });
+      return res.status(403).json({ message: 'Only brands can create campaigns. Please complete your brand profile first.' });
     }
-    
+
+    // Validate budget is a positive number
+    if (isNaN(budget) || budget <= 0) {
+      return res.status(400).json({ message: 'Budget must be a positive number' });
+    }
+
+    // Validate deadline is a future date
+    const deadlineDate = new Date(deadline);
+    const now = new Date();
+    if (deadlineDate <= now) {
+      return res.status(400).json({ message: 'Deadline must be a future date' });
+    }
+
     const campaign = new Campaign({
       brandId: brand._id,
       title,
       description,
-      budget,
-      requirements,
+      budget: parseFloat(budget),
+      requirements: requirements || '',
       categories,
       platforms,
-      deadline
+      deadline: deadlineDate
     });
-    
-    await campaign.save();
-    res.status(201).json(campaign);
+
+    const savedCampaign = await campaign.save();
+    console.log(`Campaign created successfully: ${savedCampaign._id} by brand: ${brand._id}`);
+
+    res.status(201).json({
+      message: 'Campaign created successfully',
+      campaign: savedCampaign
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    console.error('Campaign creation error:', error);
+    res.status(500).json({
+      message: 'Server error occurred while creating campaign. Please try again.',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 });
 

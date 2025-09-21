@@ -12,27 +12,27 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/dashboard" className="text-xl font-bold text-indigo-600">
+    <nav className="navbar">
+      <div className="container">
+        <div className="flex-between h-16">
+          <div className="flex-start">
+            <Link to="/dashboard" className="navbar-brand text-gradient">
               Influencer Market
             </Link>
           </div>
 
           {currentUser && (
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-6">
               <Link
                 to="/dashboard"
-                className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                className="navbar-link"
               >
                 Dashboard
               </Link>
 
               <Link
                 to="/campaigns"
-                className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                className="navbar-link"
               >
                 Campaigns
               </Link>
@@ -40,7 +40,7 @@ const Navbar = () => {
               {currentUser.role === 'brand' && (
                 <Link
                   to="/search"
-                  className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                  className="navbar-link"
                 >
                   Search Influencers
                 </Link>
@@ -49,7 +49,7 @@ const Navbar = () => {
               {currentUser.role === 'brand' && (
                 <Link
                   to="/create-campaign"
-                  className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                  className="navbar-link"
                 >
                   Create Campaign
                 </Link>
@@ -57,18 +57,28 @@ const Navbar = () => {
 
               <Link
                 to="/messages"
-                className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                className="navbar-link"
               >
                 Messages
               </Link>
 
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-600">
-                  {currentUser.name} ({currentUser.role})
-                </span>
+              <div className="flex items-center space-x-3 ml-4 pl-4 border-l border-gray-200">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex-center text-white text-sm font-medium">
+                    {currentUser.name?.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="hidden sm:block">
+                    <div className="text-sm font-medium text-gray-900">
+                      {currentUser.name}
+                    </div>
+                    <div className="text-xs text-gray-500 capitalize">
+                      {currentUser.role}
+                    </div>
+                  </div>
+                </div>
                 <button
                   onClick={handleLogout}
-                  className="bg-indigo-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-700"
+                  className="btn btn-danger text-sm"
                 >
                   Logout
                 </button>
