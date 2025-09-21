@@ -1,0 +1,495 @@
+/* Influencer Profile Page Styles */
+.influencer-profile-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 2rem 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.influencer-profile-container {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header Section */
+.influencer-profile-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.influencer-profile-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.influencer-profile-subtitle {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Main Card */
+.influencer-profile-card {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #f3f4f6;
+}
+
+/* Progress Bar */
+.influencer-profile-progress {
+  background: #f9fafb;
+  padding: 2rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.influencer-profile-progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.influencer-profile-progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.influencer-profile-progress-circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.influencer-profile-progress-circle.active {
+  background: #667eea;
+  border-color: #667eea;
+  color: white;
+}
+
+.influencer-profile-progress-circle.inactive {
+  border-color: #d1d5db;
+  color: #9ca3af;
+}
+
+.influencer-profile-progress-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #6b7280;
+  margin-top: 0.5rem;
+  text-transform: capitalize;
+}
+
+.influencer-profile-progress-bar {
+  position: relative;
+  max-width: 28rem;
+  margin: 0 auto;
+  margin-top: 0.75rem;
+}
+
+.influencer-profile-progress-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 0.125rem;
+  background: #e5e7eb;
+  transform: translateY(-50%);
+}
+
+.influencer-profile-progress-fill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 0.125rem;
+  background: #667eea;
+  transform: translateY(-50%);
+  transition: width 0.3s ease;
+}
+
+/* Content */
+.influencer-profile-content {
+  padding: 2rem;
+}
+
+/* Alert Messages */
+.influencer-profile-alert {
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.influencer-profile-alert.error {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(238, 90, 36, 0.1) 100%);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  color: #dc2626;
+}
+
+.influencer-profile-alert-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.influencer-profile-alert-text {
+  flex: 1;
+}
+
+.influencer-profile-alert-dismiss {
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  margin-left: auto;
+}
+
+.influencer-profile-alert-dismiss:hover {
+  opacity: 0.7;
+}
+
+/* Form Styles */
+.influencer-profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.influencer-profile-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.influencer-profile-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.influencer-profile-section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.influencer-profile-section-subtitle {
+  color: #6b7280;
+}
+
+.influencer-profile-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.influencer-profile-form-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.influencer-profile-form-input,
+.influencer-profile-form-textarea,
+.influencer-profile-form-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.influencer-profile-form-input:focus,
+.influencer-profile-form-textarea:focus,
+.influencer-profile-form-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.influencer-profile-form-input::placeholder,
+.influencer-profile-form-textarea::placeholder {
+  color: #9ca3af;
+}
+
+.influencer-profile-form-textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.influencer-profile-form-help {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Categories Grid */
+.influencer-profile-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.influencer-profile-category-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.influencer-profile-category-item:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.influencer-profile-category-item.selected {
+  background: rgba(102, 126, 234, 0.05);
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.influencer-profile-category-input {
+  width: 1rem;
+  height: 1rem;
+  color: #667eea;
+  border: 2px solid #d1d5db;
+  border-radius: 0.25rem;
+  margin-right: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.influencer-profile-category-input:checked {
+  background: #667eea;
+  border-color: #667eea;
+}
+
+.influencer-profile-category-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.influencer-profile-category-text {
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Social Platform Cards */
+.influencer-profile-platform-card {
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background: #f9fafb;
+}
+
+.influencer-profile-platform-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.influencer-profile-platform-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.influencer-profile-platform-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.influencer-profile-platform-remove {
+  color: #dc2626;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: color 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.influencer-profile-platform-remove:hover {
+  color: #b91c1c;
+}
+
+.influencer-profile-platform-remove-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Add Platform Button */
+.influencer-profile-add-platform {
+  width: 100%;
+  padding: 1rem;
+  border: 2px dashed #d1d5db;
+  border-radius: 0.5rem;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: white;
+}
+
+.influencer-profile-add-platform:hover {
+  border-color: #9ca3af;
+  color: #374151;
+}
+
+.influencer-profile-add-platform-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Navigation Buttons */
+.influencer-profile-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.influencer-profile-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.influencer-profile-nav-btn.back {
+  background: transparent;
+  color: #6b7280;
+  border: 2px solid #e5e7eb;
+}
+
+.influencer-profile-nav-btn.back:hover {
+  background: #f9fafb;
+  color: #374151;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+.influencer-profile-nav-btn.next {
+  background: linear-gradient(135deg, #667eea 0%, #5a67d8 100%);
+  color: white;
+}
+
+.influencer-profile-nav-btn.next:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #4c51bf 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.influencer-profile-nav-btn.submit {
+  background: linear-gradient(135deg, #667eea 0%, #5a67d8 100%);
+  color: white;
+}
+
+.influencer-profile-nav-btn.submit:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #4c51bf 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.influencer-profile-nav-btn.submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.influencer-profile-nav-btn-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .influencer-profile-title {
+    font-size: 2.25rem;
+  }
+
+  .influencer-profile-progress {
+    padding: 2.5rem;
+  }
+
+  .influencer-profile-content {
+    padding: 2.5rem;
+  }
+
+  .influencer-profile-categories-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .influencer-profile-platform-row {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .influencer-profile-categories-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .influencer-profile-container {
+    padding: 0 0.75rem;
+  }
+
+  .influencer-profile-title {
+    font-size: 1.5rem;
+  }
+
+  .influencer-profile-progress {
+    padding: 1.5rem;
+  }
+
+  .influencer-profile-content {
+    padding: 1.5rem;
+  }
+
+  .influencer-profile-categories-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .influencer-profile-navigation {
+    flex-direction: column;
+  }
+}

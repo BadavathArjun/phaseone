@@ -1,0 +1,334 @@
+/* Messages Page Styles */
+.messages-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 2rem 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.messages-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header Section */
+.messages-header {
+  margin-bottom: 2rem;
+}
+
+.messages-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.messages-subtitle {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Main Layout */
+.messages-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+/* Chat List Section */
+.messages-chat-list {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #f3f4f6;
+}
+
+.messages-chat-list-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.messages-search-container {
+  position: relative;
+}
+
+.messages-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  width: 1.25rem;
+  height: 1.25rem;
+  pointer-events: none;
+}
+
+.messages-search-input {
+  width: 100%;
+  padding: 0.625rem 1rem 0.625rem 2.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.messages-search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.messages-search-input::placeholder {
+  color: #9ca3af;
+}
+
+.messages-chat-list-content {
+  max-height: calc(100vh - 12rem);
+  overflow-y: auto;
+}
+
+.messages-chat-list-empty {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.messages-chat-list-empty-icon {
+  width: 3rem;
+  height: 3rem;
+  color: #9ca3af;
+  margin: 0 auto 1rem;
+}
+
+.messages-chat-list-empty-text {
+  color: #6b7280;
+}
+
+/* Chat Item */
+.messages-chat-item {
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-right: 4px solid transparent;
+}
+
+.messages-chat-item:hover {
+  background: #f9fafb;
+}
+
+.messages-chat-item.selected {
+  background: rgba(102, 126, 234, 0.05);
+  border-right-color: #667eea;
+}
+
+.messages-chat-item-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.messages-chat-avatar {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.messages-chat-avatar-circle {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.messages-chat-online-indicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: #10b981;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.messages-chat-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.messages-chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.messages-chat-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1f2937;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.messages-chat-time {
+  font-size: 0.75rem;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.messages-chat-message {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.messages-chat-last-message {
+  font-size: 0.875rem;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.messages-chat-unread {
+  background: #667eea;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 50%;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.messages-chat-role {
+  margin-top: 0.25rem;
+}
+
+.messages-chat-role-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.messages-chat-role-badge.influencer {
+  background: rgba(147, 51, 234, 0.1);
+  color: #7c3aed;
+}
+
+.messages-chat-role-badge.brand {
+  background: rgba(59, 130, 246, 0.1);
+  color: #1d4ed8;
+}
+
+/* Chat Area */
+.messages-chat-area {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f3f4f6;
+}
+
+.messages-chat-placeholder {
+  padding: 2rem;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.messages-chat-placeholder-icon {
+  width: 5rem;
+  height: 5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: white;
+}
+
+.messages-chat-placeholder-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.messages-chat-placeholder-text {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.messages-chat-placeholder-description {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* Loading State */
+.messages-loading {
+  animation: messages-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes messages-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.messages-loading-skeleton {
+  background: #e5e7eb;
+  border-radius: 0.25rem;
+}
+
+/* Responsive Design */
+@media (min-width: 1024px) {
+  .messages-layout {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .messages-title {
+    font-size: 2.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .messages-container {
+    padding: 0 0.75rem;
+  }
+
+  .messages-title {
+    font-size: 1.5rem;
+  }
+
+  .messages-chat-list-header {
+    padding: 1rem;
+  }
+}
+
+/* Avatar Gradient Variants */
+.messages-avatar-influencer {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.messages-avatar-brand {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}

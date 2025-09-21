@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { campaignsAPI } from '../api/auth';
+import './CreateCampaign.css';
 
 const CreateCampaign = () => {
   const navigate = useNavigate();
@@ -120,159 +121,197 @@ const CreateCampaign = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-white rounded-lg shadow-md p-8">
-        <h1 className="text-3xl font-bold mb-8 text-gray-900">Create a New Campaign</h1>
-
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-            {error}
-          </div>
-        )}
-
-        {success && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
-            {success}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
-              Campaign Title
-            </label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              required
-              value={formData.title}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Enter campaign title"
-            />
+    <div className="create-campaign-page">
+      <div className="create-campaign-container">
+        <div className="create-campaign-card">
+          <div className="create-campaign-header">
+            <h1 className="create-campaign-title">Create a New Campaign</h1>
+            <p className="create-campaign-subtitle">Launch your influencer marketing campaign and connect with creators</p>
           </div>
 
-          <div>
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
-              Description
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              rows="4"
-              required
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Describe your campaign objectives and requirements"
-            />
-          </div>
+          <div className="create-campaign-content">
+            {error && (
+              <div className="create-campaign-alert error">
+                <svg xmlns="http://www.w3.org/2000/svg" className="create-campaign-alert-icon" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+                <span className="create-campaign-alert-text">{error}</span>
+                <button
+                  onClick={() => setError('')}
+                  className="create-campaign-alert-dismiss"
+                  aria-label="Dismiss error"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label htmlFor="budget" className="block text-sm font-medium text-gray-700 mb-2">
-                Budget ($)
-              </label>
-              <input
-                type="number"
-                id="budget"
-                name="budget"
-                required
-                min="0"
-                value={formData.budget}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="5000"
-              />
-            </div>
+            {success && (
+              <div className="create-campaign-alert success">
+                <svg xmlns="http://www.w3.org/2000/svg" className="create-campaign-alert-icon" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="create-campaign-alert-text">{success}</span>
+              </div>
+            )}
 
-            <div>
-              <label htmlFor="deadline" className="block text-sm font-medium text-gray-700 mb-2">
-                Deadline
-              </label>
-              <input
-                type="date"
-                id="deadline"
-                name="deadline"
-                required
-                value={formData.deadline}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              Categories
-            </label>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {categories.map(category => (
-                <label key={category} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={formData.categories.includes(category)}
-                    onChange={() => handleCategoryChange(category)}
-                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                  />
-                  <span className="ml-2 text-gray-700">{category}</span>
+            <form onSubmit={handleSubmit} className="create-campaign-form">
+              <div className="create-campaign-form-group">
+                <label htmlFor="title" className="create-campaign-form-label">
+                  Campaign Title *
                 </label>
-              ))}
-            </div>
-          </div>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  required
+                  value={formData.title}
+                  onChange={handleChange}
+                  className="create-campaign-form-input"
+                  placeholder="e.g., Summer Fashion Collection Promotion"
+                />
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              Platforms
-            </label>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {platforms.map(platform => (
-                <label key={platform} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={formData.platforms.includes(platform)}
-                    onChange={() => handlePlatformChange(platform)}
-                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                  />
-                  <span className="ml-2 text-gray-700">{platform}</span>
+              <div className="create-campaign-form-group">
+                <label htmlFor="description" className="create-campaign-form-label">
+                  Description *
                 </label>
-              ))}
-            </div>
-          </div>
+                <textarea
+                  id="description"
+                  name="description"
+                  rows="4"
+                  required
+                  value={formData.description}
+                  onChange={handleChange}
+                  className="create-campaign-form-textarea description"
+                  placeholder="Describe your campaign objectives, target audience, and what you're looking for in influencers..."
+                />
+              </div>
 
-          <div>
-            <label htmlFor="requirements" className="block text-sm font-medium text-gray-700 mb-2">
-              Specific Requirements
-            </label>
-            <textarea
-              id="requirements"
-              name="requirements"
-              rows="3"
-              value={formData.requirements}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Any specific requirements for influencers"
-            />
-          </div>
+              <div className="create-campaign-grid">
+                <div className="create-campaign-grid-item">
+                  <label htmlFor="budget" className="create-campaign-form-label">
+                    Budget ($) *
+                  </label>
+                  <div className="create-campaign-budget-input">
+                    <div className="create-campaign-budget-symbol">$</div>
+                    <input
+                      type="number"
+                      id="budget"
+                      name="budget"
+                      required
+                      min="0"
+                      value={formData.budget}
+                      onChange={handleChange}
+                      className="create-campaign-form-input"
+                      placeholder="5000"
+                    />
+                  </div>
+                </div>
 
-          <div className="flex justify-end space-x-4">
-            <button
-              type="button"
-              onClick={() => navigate('/campaigns')}
-              className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
-            >
-              {loading ? 'Creating...' : 'Create Campaign'}
-            </button>
+                <div className="create-campaign-grid-item">
+                  <label htmlFor="deadline" className="create-campaign-form-label">
+                    Deadline *
+                  </label>
+                  <input
+                    type="date"
+                    id="deadline"
+                    name="deadline"
+                    required
+                    value={formData.deadline}
+                    onChange={handleChange}
+                    className="create-campaign-form-input"
+                  />
+                </div>
+              </div>
+
+              <div className="create-campaign-selection-group">
+                <label className="create-campaign-selection-label">
+                  Categories *
+                </label>
+                <p className="create-campaign-selection-help">Select at least one category that describes your campaign</p>
+                <div className="create-campaign-selection-grid">
+                  {categories.map(category => (
+                    <label key={category} className={`create-campaign-selection-item ${formData.categories.includes(category) ? 'selected' : ''}`}>
+                      <input
+                        type="checkbox"
+                        checked={formData.categories.includes(category)}
+                        onChange={() => handleCategoryChange(category)}
+                        className="create-campaign-selection-input"
+                      />
+                      <span className="create-campaign-selection-text">{category}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="create-campaign-selection-group">
+                <label className="create-campaign-selection-label">
+                  Platforms *
+                </label>
+                <p className="create-campaign-selection-help">Select the social media platforms for this campaign</p>
+                <div className="create-campaign-selection-grid">
+                  {platforms.map(platform => (
+                    <label key={platform} className={`create-campaign-selection-item ${formData.platforms.includes(platform) ? 'selected' : ''}`}>
+                      <input
+                        type="checkbox"
+                        checked={formData.platforms.includes(platform)}
+                        onChange={() => handlePlatformChange(platform)}
+                        className="create-campaign-selection-input"
+                      />
+                      <span className="create-campaign-selection-text">{platform}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="create-campaign-form-group">
+                <label htmlFor="requirements" className="create-campaign-form-label">
+                  Specific Requirements
+                </label>
+                <p className="create-campaign-selection-help">Any specific requirements for influencers (optional)</p>
+                <textarea
+                  id="requirements"
+                  name="requirements"
+                  rows="3"
+                  value={formData.requirements}
+                  onChange={handleChange}
+                  className="create-campaign-form-textarea requirements"
+                  placeholder="e.g., Minimum 10K followers, specific content format, mandatory hashtags..."
+                />
+              </div>
+
+              <div className="create-campaign-actions">
+                <button
+                  type="button"
+                  onClick={() => navigate('/campaigns')}
+                  className="create-campaign-action-btn cancel"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="create-campaign-action-btn submit"
+                >
+                  {loading ? (
+                    <>
+                      <svg className="create-campaign-action-btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Creating Campaign...
+                    </>
+                  ) : (
+                    'Create Campaign'
+                  )}
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

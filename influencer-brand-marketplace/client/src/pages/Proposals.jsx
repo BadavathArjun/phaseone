@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { campaignsAPI } from '../api/auth';
 import { useAuth } from '../contexts/AuthContext';
+import './Proposals.css';
 
 const Proposals = () => {
   const { currentUser } = useAuth();
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [activeTab, setActiveTab] = useState('all');
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -43,102 +45,214 @@ const Proposals = () => {
     }
   };
 
+  // Filter campaigns based on active tab
+  const filteredCampaigns = campaigns.filter(campaign => {
+    if (activeTab === 'all') return true;
+    if (activeTab === 'active') return campaign.status === 'active';
+    if (activeTab === 'pending') {
+      return campaign.proposals.some(proposal => proposal.status === 'pending');
+    }
+    return true;
+  });
+
   if (loading) {
-    return <div className="flex justify-center items-center h-64" role="status" aria-live="polite">Loading...</div>;
+    return (
+      <div className="proposals-page">
+        <div className="proposals-container">
+          <div className="proposals-loading">
+            <div className="proposals-loading-skeleton proposals-title"></div>
+            <div className="proposals-loading">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="proposals-loading-skeleton proposals-campaign-card"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="text-red-600 text-center mt-4" role="alert">{error}</div>;
+    return (
+      <div className="proposals-page">
+        <div className="proposals-container">
+          <div className="proposals-error">
+            <svg xmlns="http://www.w3.org/2000/svg" className="proposals-error-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h3 className="proposals-error-title">Error Loading Proposals</h3>
+            <p className="proposals-error-text">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="proposals-error-btn"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (currentUser?.role !== 'brand') {
-    return <div className="text-center mt-4" role="alert">Access denied. Only brands can view proposals.</div>;
+    return (
+      <div className="proposals-page">
+        <div className="proposals-container">
+          <div className="proposals-access-denied">
+            <svg xmlns="http://www.w3.org/2000/svg" className="proposals-access-denied-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <h3 className="proposals-access-denied-title">Access Denied</h3>
+            <p className="proposals-access-denied-text">Only brand accounts can view campaign proposals.</p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-4 sm:p-6">
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Campaign Proposals</h1>
-
-      {campaigns.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No campaigns found. Create a campaign to receive proposals.</p>
+    <div className="proposals-page">
+      <div className="proposals-container">
+        <div className="proposals-header">
+          <h1 className="proposals-title">Campaign Proposals</h1>
+          <p className="proposals-subtitle">Manage and review influencer proposals for your campaigns</p>
         </div>
-      ) : (
-        <div className="space-y-4 sm:space-y-6">
-          {campaigns.map(campaign => (
-            <div key={campaign._id} className="bg-white rounded-lg shadow-md p-4 sm:p-6">
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4">
-                <div className="mb-2 sm:mb-0">
-                  <h2 className="text-lg sm:text-xl font-semibold text-gray-900">{campaign.title}</h2>
-                  <p className="text-gray-600 mt-1 text-sm sm:text-base">{campaign.description}</p>
-                </div>
-                <span className={`px-3 py-1 rounded-full text-sm font-medium self-start sm:self-auto ${
-                  campaign.status === 'active' ? 'bg-green-100 text-green-800' :
-                  campaign.status === 'closed' ? 'bg-red-100 text-red-800' :
-                  'bg-blue-100 text-blue-800'
-                }`}>
-                  {campaign.status}
-                </span>
-              </div>
 
-              <div className="mb-4">
-                <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-3">
-                  Proposals ({campaign.proposals.length})
-                </h3>
+        {/* Tab Navigation */}
+        <div className="proposals-tabs">
+          <div className="proposals-tabs-container">
+            {[
+              { id: 'all', label: 'All Campaigns' },
+              { id: 'active', label: 'Active' },
+              { id: 'pending', label: 'Pending Review' }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`proposals-tab ${activeTab === tab.id ? 'active' : ''}`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
-                {campaign.proposals.length === 0 ? (
-                  <p className="text-gray-500">No proposals yet.</p>
-                ) : (
-                  <div className="space-y-3 sm:space-y-4">
-                    {campaign.proposals.map(proposal => (
-                      <div key={proposal._id} className="border border-gray-200 rounded-lg p-3 sm:p-4">
-                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3">
-                          <div className="mb-2 sm:mb-0">
-                            <p className="font-medium text-gray-900 text-sm sm:text-base">
-                              Influencer ID: {proposal.influencerId}
-                            </p>
-                            <p className="text-sm text-gray-500">
-                              Submitted: {new Date(proposal.submittedAt).toLocaleDateString()}
-                            </p>
-                          </div>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium self-start sm:self-auto ${
-                            proposal.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                            proposal.status === 'accepted' ? 'bg-green-100 text-green-800' :
-                            'bg-red-100 text-red-800'
-                          }`}>
-                            {proposal.status}
-                          </span>
-                        </div>
-
-                        <p className="text-gray-700 mb-4 text-sm sm:text-base">{proposal.message}</p>
-
-                        {proposal.status === 'pending' && (
-                          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-                            <button
-                              onClick={() => handleProposalAction(campaign._id, proposal._id, 'accepted')}
-                              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
-                              aria-label={`Accept proposal from influencer ${proposal.influencerId}`}
-                            >
-                              Accept
-                            </button>
-                            <button
-                              onClick={() => handleProposalAction(campaign._id, proposal._id, 'rejected')}
-                              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
-                              aria-label={`Reject proposal from influencer ${proposal.influencerId}`}
-                            >
-                              Reject
-                            </button>
-                          </div>
-                        )}
+        {filteredCampaigns.length === 0 ? (
+          <div className="proposals-empty">
+            <svg xmlns="http://www.w3.org/2000/svg" className="proposals-empty-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h3 className="proposals-empty-title">
+              {activeTab === 'all' ? 'No Campaigns Found' : `No ${activeTab} Campaigns`}
+            </h3>
+            <p className="proposals-empty-text">
+              {activeTab === 'all'
+                ? 'Create a campaign to start receiving proposals from influencers.'
+                : `You don't have any ${activeTab} campaigns at the moment.`
+              }
+            </p>
+            <button className="proposals-empty-btn">
+              Create Campaign
+            </button>
+          </div>
+        ) : (
+          <div className="proposals-campaigns">
+            {filteredCampaigns.map(campaign => (
+              <div key={campaign._id} className="proposals-campaign-card">
+                <div className="proposals-campaign-header">
+                  <div className="proposals-campaign-content">
+                    <div className="proposals-campaign-info">
+                      <h2 className="proposals-campaign-title">{campaign.title}</h2>
+                      <p className="proposals-campaign-description">{campaign.description}</p>
+                    </div>
+                    <div className="proposals-campaign-meta">
+                      <span className={`proposals-campaign-status ${campaign.status || 'active'}`}>
+                        {campaign.status?.charAt(0).toUpperCase() + campaign.status?.slice(1) || 'Active'}
+                      </span>
+                      <div className="proposals-campaign-stats">
+                        <div className="proposals-campaign-count">{campaign.proposals.length}</div>
+                        <div className="proposals-campaign-label">Proposals</div>
                       </div>
-                    ))}
+                    </div>
                   </div>
-                )}
+                </div>
+
+                <div className="proposals-section">
+                  <h3 className="proposals-section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="proposals-section-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Proposals ({campaign.proposals.length})
+                  </h3>
+
+                  {campaign.proposals.length === 0 ? (
+                    <div className="proposals-empty-section">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="proposals-empty-section-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <p className="proposals-empty-section-text">No proposals received yet</p>
+                    </div>
+                  ) : (
+                    <div className="proposals-list">
+                      {campaign.proposals.map(proposal => (
+                        <div key={proposal._id} className="proposals-item">
+                          <div className="proposals-item-header">
+                            <div className="proposals-item-info">
+                              <div className="proposals-item-user">
+                                <div className="proposals-item-avatar">
+                                  {proposal.influencerId?.charAt(0) || 'I'}
+                                </div>
+                                <div className="proposals-item-details">
+                                  <p className="proposals-item-name">
+                                    {proposal.influencerId || 'Influencer'}
+                                  </p>
+                                  <p className="proposals-item-date">
+                                    {new Date(proposal.submittedAt).toLocaleDateString()}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            <span className={`proposals-item-status ${proposal.status || 'pending'}`}>
+                              {proposal.status?.charAt(0).toUpperCase() + proposal.status?.slice(1) || 'Pending'}
+                            </span>
+                          </div>
+
+                          <div className="proposals-item-message">
+                            <p>{proposal.message}</p>
+                          </div>
+
+                          {proposal.status === 'pending' && (
+                            <div className="proposals-item-actions">
+                              <button
+                                onClick={() => handleProposalAction(campaign._id, proposal._id, 'accepted')}
+                                className="proposals-action-btn accept"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="proposals-action-btn-icon" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                                Accept Proposal
+                              </button>
+                              <button
+                                onClick={() => handleProposalAction(campaign._id, proposal._id, 'rejected')}
+                                className="proposals-action-btn reject"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="proposals-action-btn-icon" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                </svg>
+                                Reject Proposal
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

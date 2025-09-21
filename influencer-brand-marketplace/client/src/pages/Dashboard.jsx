@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import './Dashboard.css';
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
@@ -10,27 +11,39 @@ const Dashboard = () => {
       title: 'Campaigns',
       description: 'View and manage your campaigns',
       path: '/campaigns',
-      icon: '📊',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      ),
       color: 'from-blue-500 to-blue-600',
-      bgColor: 'bg-blue-50',
+      bgColor: 'dashboard-card-blue',
       hoverColor: 'hover:bg-blue-100'
     },
     {
       title: 'Messages',
       description: 'Chat with brands and influencers',
       path: '/messages',
-      icon: '💬',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        </svg>
+      ),
       color: 'from-green-500 to-green-600',
-      bgColor: 'bg-green-50',
+      bgColor: 'dashboard-card-green',
       hoverColor: 'hover:bg-green-100'
     },
     {
       title: 'Search Influencers',
       description: 'Discover influencers by category and platform',
       path: '/search',
-      icon: '🔍',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      ),
       color: 'from-purple-500 to-purple-600',
-      bgColor: 'bg-purple-50',
+      bgColor: 'dashboard-card-purple',
       hoverColor: 'hover:bg-purple-100'
     }
   ];
@@ -40,24 +53,28 @@ const Dashboard = () => {
       title: 'Proposals',
       description: 'View and manage campaign proposals',
       path: '/proposals',
-      icon: '📝',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      ),
       color: 'from-orange-500 to-orange-600',
-      bgColor: 'bg-orange-50',
+      bgColor: 'dashboard-card-orange',
       hoverColor: 'hover:bg-orange-100'
     });
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="container mx-auto px-6 py-12">
+    <div className="dashboard-page">
+      <div className="dashboard-container">
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            Welcome back!
+        <div className="dashboard-header">
+          <h1 className="dashboard-title">
+            Welcome back, {currentUser?.name || 'User'}!
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="dashboard-subtitle">
             Here's what's happening with your{' '}
-            <span className="font-semibold text-blue-600 capitalize">
+            <span className="dashboard-role">
               {currentUser?.role}
             </span>{' '}
             account today.
@@ -65,96 +82,116 @@ const Dashboard = () => {
         </div>
 
         {/* Main Dashboard Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="dashboard-cards">
           {dashboardCards.map((card, index) => (
             <Link
               key={index}
               to={card.path}
-              className={`group relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl ${card.bgColor} ${card.hoverColor} border border-gray-100`}
+              className={`dashboard-card ${card.bgColor} ${card.hoverColor}`}
             >
-              <div className="p-8">
-                <div className="flex items-center justify-between mb-6">
-                  <div className={`w-16 h-16 bg-gradient-to-r ${card.color} rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+              <div className="dashboard-card-content">
+                <div className="dashboard-card-header">
+                  <div className={`dashboard-card-icon bg-gradient-to-r ${card.color}`}>
                     {card.icon}
                   </div>
-                  <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="dashboard-card-arrow">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                <h3 className="dashboard-card-title">
                   {card.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="dashboard-card-description">
                   {card.description}
                 </p>
               </div>
-              <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${card.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left`}></div>
+              <div className={`dashboard-card-progress bg-gradient-to-r ${card.color}`}></div>
             </Link>
           ))}
         </div>
 
-        {/* Quick Stats Section */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Quick Stats</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center group">
-              <div className="bg-gradient-to-r from-blue-500 to-blue-600 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <span className="text-3xl font-bold text-white">12</span>
+        {/* Stats and Activity Container */}
+        <div className="dashboard-content">
+          {/* Quick Stats Section */}
+          <div className="dashboard-stats">
+            <h2 className="dashboard-stats-title">
+              <svg xmlns="http://www.w3.org/2000/svg" className="dashboard-stats-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              Quick Stats
+            </h2>
+            <div className="dashboard-stats-grid">
+              <div className="dashboard-stat-item">
+                <div className="dashboard-stat-value dashboard-stat-blue">
+                  12
+                </div>
+                <div className="dashboard-stat-label">Active Campaigns</div>
               </div>
-              <div className="text-gray-600 font-medium">Active Campaigns</div>
-            </div>
-            <div className="text-center group">
-              <div className="bg-gradient-to-r from-green-500 to-green-600 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <span className="text-3xl font-bold text-white">8</span>
+              <div className="dashboard-stat-item">
+                <div className="dashboard-stat-value dashboard-stat-green">
+                  8
+                </div>
+                <div className="dashboard-stat-label">Messages</div>
               </div>
-              <div className="text-gray-600 font-medium">Messages</div>
-            </div>
-            <div className="text-center group">
-              <div className="bg-gradient-to-r from-purple-500 to-purple-600 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <span className="text-3xl font-bold text-white">24</span>
+              <div className="dashboard-stat-item">
+                <div className="dashboard-stat-value dashboard-stat-purple">
+                  24
+                </div>
+                <div className="dashboard-stat-label">Proposals</div>
               </div>
-              <div className="text-gray-600 font-medium">Proposals</div>
-            </div>
-            <div className="text-center group">
-              <div className="bg-gradient-to-r from-orange-500 to-orange-600 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <span className="text-3xl font-bold text-white">95%</span>
+              <div className="dashboard-stat-item">
+                <div className="dashboard-stat-value dashboard-stat-orange">
+                  95%
+                </div>
+                <div className="dashboard-stat-label">Success Rate</div>
               </div>
-              <div className="text-gray-600 font-medium">Success Rate</div>
             </div>
           </div>
-        </div>
 
-        {/* Recent Activity Section */}
-        <div className="mt-12 bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Recent Activity</h2>
-          <div className="space-y-4">
-            <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-              <div className="w-10 h-10 bg-blue-100 rounded-full flex-center">
-                <span className="text-blue-600">📊</span>
+          {/* Recent Activity Section */}
+          <div className="dashboard-activity">
+            <h2 className="dashboard-activity-title">
+              <svg xmlns="http://www.w3.org/2000/svg" className="dashboard-activity-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Recent Activity
+            </h2>
+            <div className="dashboard-activity-list">
+              <div className="dashboard-activity-item">
+                <div className="dashboard-activity-item-icon dashboard-activity-icon-blue">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="dashboard-activity-item-content">
+                  <div className="dashboard-activity-item-title">New campaign proposal received</div>
+                  <div className="dashboard-activity-item-time">2 hours ago</div>
+                </div>
               </div>
-              <div className="flex-1">
-                <div className="font-medium text-gray-900">New campaign proposal received</div>
-                <div className="text-sm text-gray-600">2 hours ago</div>
+              <div className="dashboard-activity-item">
+                <div className="dashboard-activity-item-icon dashboard-activity-icon-green">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
+                </div>
+                <div className="dashboard-activity-item-content">
+                  <div className="dashboard-activity-item-title">New message from influencer</div>
+                  <div className="dashboard-activity-item-time">4 hours ago</div>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-              <div className="w-10 h-10 bg-green-100 rounded-full flex-center">
-                <span className="text-green-600">💬</span>
-              </div>
-              <div className="flex-1">
-                <div className="font-medium text-gray-900">New message from influencer</div>
-                <div className="text-sm text-gray-600">4 hours ago</div>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-              <div className="w-10 h-10 bg-purple-100 rounded-full flex-center">
-                <span className="text-purple-600">🔍</span>
-              </div>
-              <div className="flex-1">
-                <div className="font-medium text-gray-900">Profile views increased by 15%</div>
-                <div className="text-sm text-gray-600">1 day ago</div>
+              <div className="dashboard-activity-item">
+                <div className="dashboard-activity-item-icon dashboard-activity-icon-purple">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </div>
+                <div className="dashboard-activity-item-content">
+                  <div className="dashboard-activity-item-title">Profile views increased by 15%</div>
+                  <div className="dashboard-activity-item-time">1 day ago</div>
+                </div>
               </div>
             </div>
           </div>

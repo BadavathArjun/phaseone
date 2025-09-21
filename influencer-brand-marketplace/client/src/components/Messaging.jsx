@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { chatAPI } from '../api/auth';
 import { io } from 'socket.io-client';
+import './Messaging.css';
 
 export default function Messaging({ chatId, otherUser }) {
   const [messages, setMessages] = useState([]);

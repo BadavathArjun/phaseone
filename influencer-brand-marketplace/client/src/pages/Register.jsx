@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import './Register.css';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ export default function Register() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -25,16 +26,16 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (formData.password !== formData.confirmPassword) {
       return setError('Passwords do not match');
     }
-    
+
     try {
       setError('');
       setLoading(true);
       const result = await register(formData);
-      
+
       if (result.success) {
         // Redirect to appropriate profile setup based on role
         if (formData.role === 'influencer') {
@@ -48,139 +49,252 @@ export default function Register() {
     } catch {
       setError('Failed to create an account');
     }
-    
+
     setLoading(false);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Create your account
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Or{' '}
-            <Link
-              to="/login"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              sign in to your existing account
-            </Link>
-          </p>
+    <div className="register-page">
+      {/* Left side - Branding */}
+      <div className="register-branding">
+        <div className="register-branding-content">
+          <div className="register-branding-header">
+            <div className="register-brand-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <h1 className="register-brand-title">Join Influence Connect</h1>
+            <p className="register-brand-subtitle">
+              Where brands and creators collaborate seamlessly
+            </p>
+          </div>
+
+          <div className="register-features">
+            <div className="register-feature-item">
+              <div className="register-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 002 2h2a2 2 0 002-2V6m0 0V4a2 2 0 00-2-2h-2a2 2 0 00-2 2v2" />
+                </svg>
+              </div>
+              <span className="register-feature-text">Connect with top brands</span>
+            </div>
+
+            <div className="register-feature-item">
+              <div className="register-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <span className="register-feature-text">Grow your audience</span>
+            </div>
+
+            <div className="register-feature-item">
+              <div className="register-feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <span className="register-feature-text">Build meaningful partnerships</span>
+            </div>
+          </div>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-              {error}
+      </div>
+
+      {/* Right side - Registration Form */}
+      <div className="register-form-section">
+        <div className="register-form-container">
+          <div className="register-header">
+            <div className="register-mobile-brand">
+              <div className="register-mobile-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h1 className="register-mobile-title">Influence Connect</h1>
             </div>
-          )}
-          <div className="rounded-md shadow-sm space-y-4">
-            <div>
-              <label htmlFor="name" className="sr-only">
-                Full Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Full Name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="confirm-password" className="sr-only">
-                Confirm Password
-              </label>
-              <input
-                id="confirm-password"
-                name="confirmPassword"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Confirm Password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-            </div>
+
+            <h2 className="register-welcome-title">
+              Create your account
+            </h2>
+            <p className="register-welcome-subtitle">
+              Join our community of brands and creators
+            </p>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              I am a:
-            </label>
-            <div className="flex space-x-4">
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  name="role"
-                  value="influencer"
-                  checked={formData.role === 'influencer'}
-                  onChange={handleChange}
-                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-                />
-                <span className="ml-2 text-gray-700">Influencer</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  name="role"
-                  value="brand"
-                  checked={formData.role === 'brand'}
-                  onChange={handleChange}
-                  className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-                />
-                <span className="ml-2 text-gray-700">Brand</span>
-              </label>
-            </div>
-          </div>
+          <form className="register-form" onSubmit={handleSubmit}>
+            {error && (
+              <div className="register-error">
+                <svg xmlns="http://www.w3.org/2000/svg" className="register-error-icon" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+                <span className="register-error-text">{error}</span>
+                <button
+                  onClick={() => setError('')}
+                  className="register-error-close"
+                  aria-label="Dismiss error"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            )}
 
-          <div>
+            <div className="register-field-group">
+              <label htmlFor="name" className="register-label">
+                Full Name *
+              </label>
+              <div className="register-input-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" className="register-input-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  className="register-input"
+                  placeholder="Enter your full name"
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="register-field-group">
+              <label htmlFor="email" className="register-label">
+                Email Address *
+              </label>
+              <div className="register-input-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" className="register-input-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="register-input"
+                  placeholder="Enter your email address"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="register-field-group">
+              <label htmlFor="password" className="register-label">
+                Password *
+              </label>
+              <div className="register-input-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" className="register-input-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  className="register-input"
+                  placeholder="Create a password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="register-field-group">
+              <label htmlFor="confirmPassword" className="register-label">
+                Confirm Password *
+              </label>
+              <div className="register-input-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" className="register-input-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  className="register-input"
+                  placeholder="Confirm your password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="register-role-section">
+              <label className="register-role-label">
+                I am a: *
+              </label>
+              <div className="register-role-grid">
+                <label className={`register-role-option ${formData.role === 'influencer' ? 'selected' : ''}`}>
+                  <input
+                    type="radio"
+                    name="role"
+                    value="influencer"
+                    checked={formData.role === 'influencer'}
+                    onChange={handleChange}
+                    className="register-role-radio"
+                  />
+                  <div className="register-role-content">
+                    <span className="register-role-title">Influencer</span>
+                    <span className="register-role-subtitle">Content Creator</span>
+                  </div>
+                </label>
+                <label className={`register-role-option ${formData.role === 'brand' ? 'selected' : ''}`}>
+                  <input
+                    type="radio"
+                    name="role"
+                    value="brand"
+                    checked={formData.role === 'brand'}
+                    onChange={handleChange}
+                    className="register-role-radio"
+                  />
+                  <div className="register-role-content">
+                    <span className="register-role-title">Brand</span>
+                    <span className="register-role-subtitle">Business Account</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+              className="register-submit-btn"
             >
-              {loading ? 'Creating account...' : 'Create account'}
+              {loading ? (
+                <>
+                  <svg className="register-submit-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <span>Creating account...</span>
+                </>
+              ) : (
+                'Create Account'
+              )}
             </button>
+          </form>
+
+          <div className="register-signin-prompt">
+            <p>
+              Already have an account?{' '}
+              <Link
+                to="/login"
+                className="register-signin-link"
+              >
+                Sign in here
+              </Link>
+            </p>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,117 @@
+/* ProtectedRoute Component Styles */
+.protected-route-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.protected-route-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: protected-route-spin 1s ease-in-out infinite;
+  margin-bottom: 1.5rem;
+}
+
+.protected-route-loading-text {
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+  animation: protected-route-pulse 2s ease-in-out infinite;
+}
+
+.protected-route-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  color: white;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  padding: 2rem;
+  text-align: center;
+}
+
+.protected-route-error-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+
+.protected-route-error-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.protected-route-error-message {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+  max-width: 400px;
+}
+
+.protected-route-error-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.protected-route-error-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+@keyframes protected-route-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes protected-route-pulse {
+  0%, 100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .protected-route-loading-text {
+    font-size: 1.1rem;
+  }
+
+  .protected-route-spinner {
+    width: 50px;
+    height: 50px;
+    border-width: 3px;
+  }
+
+  .protected-route-error-title {
+    font-size: 1.3rem;
+  }
+
+  .protected-route-error-message {
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,261 @@
+/* Search Influencers Page Styles */
+.search-influencers-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 2rem 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.search-influencers-container {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.search-influencers-content {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  border: 1px solid #f3f4f6;
+}
+
+/* Header Section */
+.search-influencers-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.search-influencers-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.search-influencers-subtitle {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Search Form */
+.search-influencers-form {
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.search-influencers-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-influencers-input {
+  flex: 1;
+  padding: 0.75rem 1.25rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem 0 0 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.search-influencers-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.search-influencers-input::placeholder {
+  color: #9ca3af;
+}
+
+.search-influencers-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #667eea 100%);
+  color: white;
+  border: none;
+  border-radius: 0 0.5rem 0.5rem 0;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.search-influencers-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #5a67d8 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.search-influencers-btn-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Results Grid */
+.search-influencers-results {
+  display: grid;
+  gap: 1.25rem;
+}
+
+/* Result Card */
+.search-influencers-card {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f3f4f6;
+  transition: all 0.3s ease;
+  transform: scale(1);
+  cursor: pointer;
+}
+
+.search-influencers-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.search-influencers-card-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.search-influencers-avatar {
+  flex-shrink: 0;
+}
+
+.search-influencers-avatar-circle {
+  width: 3rem;
+  height: 3rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #667eea 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.search-influencers-details {
+  flex: 1;
+}
+
+.search-influencers-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+
+.search-influencers-category {
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.1);
+  color: #1d4ed8;
+  font-size: 0.75rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.search-influencers-stats {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+}
+
+.search-influencers-stats-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.25rem;
+}
+
+.search-influencers-view-btn {
+  background: transparent;
+  color: #667eea;
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-influencers-view-btn:hover {
+  background: rgba(102, 126, 234, 0.05);
+  color: #5a67d8;
+  border-color: rgba(102, 126, 234, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Empty State */
+.search-influencers-empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+}
+
+.search-influencers-empty-icon {
+  width: 4rem;
+  height: 4rem;
+  color: #9ca3af;
+  margin: 0 auto 0.75rem;
+}
+
+.search-influencers-empty-title {
+  font-size: 1.125rem;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+}
+
+.search-influencers-empty-text {
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .search-influencers-container {
+    padding: 0 0.75rem;
+  }
+
+  .search-influencers-title {
+    font-size: 1.5rem;
+  }
+
+  .search-influencers-content {
+    padding: 1rem;
+  }
+
+  .search-influencers-input-container {
+    flex-direction: column;
+  }
+
+  .search-influencers-input {
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .search-influencers-btn {
+    border-radius: 0.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .search-influencers-card-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-influencers-avatar {
+    align-self: flex-start;
+  }
+}
