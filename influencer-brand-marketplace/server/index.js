@@ -29,6 +29,7 @@ app.use('/influencer', require('./routes/influencer'));
 app.use('/brand', require('./routes/brand'));
 app.use('/campaigns', require('./routes/campaigns'));
 app.use('/chat', require('./routes/chat'));
+app.use('/proposals', require('./routes/proposals'));
 
 // Socket.io for real-time messaging
 io.on('connection', (socket) => {

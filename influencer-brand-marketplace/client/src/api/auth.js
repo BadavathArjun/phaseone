@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4001';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -33,6 +33,23 @@ export const authAPI = {
       return Promise.reject(error);
     }
   },
+
+  // Password reset functionality
+  forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
+  resetPassword: (token, password) => api.post(`/auth/reset-password/${token}`, { password }),
+
+  // Email verification
+  verifyEmail: (token) => api.get(`/auth/verify-email/${token}`),
+
+  // Profile management
+  getProfile: () => api.get('/auth/profile'),
+  updateProfile: (profileData) => api.put('/auth/profile', profileData),
+
+  // Password management
+  changePassword: (passwordData) => api.put('/auth/change-password', passwordData),
+
+  // Social login (placeholder for future implementation)
+  socialLogin: (provider, token) => api.post(`/auth/${provider}`, { token }),
 };
 
 export const influencerAPI = {
@@ -45,6 +62,7 @@ export const influencerAPI = {
 export const brandAPI = {
   createProfile: (profileData) => api.post('/brand/onboard', profileData),
   getProfile: (id) => api.get(`/brand/profile/${id}`),
+  updateProfile: (id, updates) => api.put(`/brand/profile/${id}`, updates),
 };
 
 export const campaignsAPI = {
@@ -54,6 +72,30 @@ export const campaignsAPI = {
   update: (id, updates) => api.put(`/campaigns/${id}`, updates),
   apply: (campaignId, proposal) => api.post(`/campaigns/${campaignId}/apply`, proposal),
   updateProposal: (campaignId, proposalId, status) => api.put(`/campaigns/${campaignId}/proposals/${proposalId}`, { status }),
+};
+
+export const proposalsAPI = {
+  // Submit a proposal to a campaign
+  submit: (proposalData) => api.post('/proposals/submit', proposalData),
+
+  // Get proposals for a campaign (brands)
+  getByCampaign: (campaignId) => api.get(`/proposals/campaign/${campaignId}`),
+
+  // Get proposals by current user (influencers)
+  getMyProposals: () => api.get('/proposals/my-proposals'),
+
+  // Update proposal status (brands)
+  updateStatus: (proposalId, status, message) => api.put(`/proposals/${proposalId}/status`, { status, message }),
+
+  // Negotiate proposal (influencers)
+  negotiate: (proposalId, message, proposedRate) => api.put(`/proposals/${proposalId}/negotiate`, { message, proposedRate }),
+
+  // Accept final terms
+  acceptTerms: (proposalId, finalRate, finalDeliverables, finalTimeline) =>
+    api.put(`/proposals/${proposalId}/accept`, { finalRate, finalDeliverables, finalTimeline }),
+
+  // Get proposal details
+  get: (proposalId) => api.get(`/proposals/${proposalId}`),
 };
 
 export const chatAPI = {

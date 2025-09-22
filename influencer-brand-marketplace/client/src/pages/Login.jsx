@@ -35,7 +35,7 @@ export default function Login() {
 
   return (
     <div className="login-page">
-      {/* Left side - Branding */}
+      {/* Left side - Enhanced Branding */}
       <div className="login-branding">
         <div className="login-branding-content">
           <div className="login-branding-header">
@@ -57,7 +57,10 @@ export default function Login() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <span className="login-feature-text">Manage campaigns efficiently</span>
+              <div className="login-feature-content">
+                <h3 className="login-feature-title">Campaign Management</h3>
+                <span className="login-feature-text">Manage campaigns efficiently with advanced tools</span>
+              </div>
             </div>
 
             <div className="login-feature-item">
@@ -66,7 +69,10 @@ export default function Login() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                 </svg>
               </div>
-              <span className="login-feature-text">Real-time messaging</span>
+              <div className="login-feature-content">
+                <h3 className="login-feature-title">Real-time Messaging</h3>
+                <span className="login-feature-text">Instant communication with brands and creators</span>
+              </div>
             </div>
 
             <div className="login-feature-item">
@@ -75,13 +81,20 @@ export default function Login() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <span className="login-feature-text">Track performance analytics</span>
+              <div className="login-feature-content">
+                <h3 className="login-feature-title">Performance Analytics</h3>
+                <span className="login-feature-text">Track performance with detailed insights</span>
+              </div>
             </div>
+          </div>
+
+          <div className="login-brand-footer">
+            <p className="login-brand-quote">"The best platform for influencer marketing"</p>
           </div>
         </div>
       </div>
 
-      {/* Right side - Login Form */}
+      {/* Right side - Enhanced Login Form */}
       <div className="login-form-section">
         <div className="login-form-container">
           <div className="login-header">
@@ -94,21 +107,25 @@ export default function Login() {
               <h1 className="login-mobile-title">Influence Connect</h1>
             </div>
 
-            <h2 className="login-welcome-title">
-              Welcome back
-            </h2>
-            <p className="login-welcome-subtitle">
-              Sign in to your account to continue
-            </p>
+            <div className="login-welcome">
+              <h2 className="login-welcome-title">
+                Welcome back
+              </h2>
+              <p className="login-welcome-subtitle">
+                Sign in to your account to continue
+              </p>
+            </div>
           </div>
 
           <form className="login-form" onSubmit={handleSubmit}>
             {error && (
               <div className="login-error">
-                <svg xmlns="http://www.w3.org/2000/svg" className="login-error-icon" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                </svg>
-                <span className="login-error-text">{error}</span>
+                <div className="login-error-content">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="login-error-icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                  <span className="login-error-text">{error}</span>
+                </div>
                 <button
                   onClick={() => setError('')}
                   className="login-error-close"
@@ -167,16 +184,17 @@ export default function Login() {
 
             <div className="login-form-footer">
               <div className="login-remember">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="login-checkbox"
-                />
-                <label htmlFor="remember-me" className="login-remember-label">
-                  Remember me
+                <label className="login-checkbox-container">
+                  <input
+                    id="remember-me"
+                    name="remember-me"
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="login-checkbox"
+                  />
+                  <span className="login-checkbox-checkmark"></span>
+                  <span className="login-remember-label">Remember me</span>
                 </label>
               </div>
 

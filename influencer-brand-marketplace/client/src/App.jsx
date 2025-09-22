@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import InfluencerProfile from './pages/InfluencerProfile';
 import BrandProfile from './pages/BrandProfile';
+import ProfileSettings from './pages/ProfileSettings';
 import Dashboard from './pages/Dashboard';
 import Campaigns from './pages/Campaigns';
 import CampaignDetail from './pages/CampaignDetail';
@@ -38,6 +39,16 @@ function App() {
                       <Route path="/brand-profile" element={
                         <ProtectedRoute allowedRoles={['brand']}>
                           <BrandProfile />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/profile" element={
+                        <ProtectedRoute>
+                          <ProfileSettings />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="/settings" element={
+                        <ProtectedRoute>
+                          <ProfileSettings />
                         </ProtectedRoute>
                       } />
                       <Route path="/dashboard" element={
